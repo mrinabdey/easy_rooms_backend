@@ -14,14 +14,14 @@ exports.login = (req, res) => {
                     return res.status(200).json(authorize.createToken(user.email));
                     // return res.status(200).json("User Valid!");
                 }
-                return res.status(401).json('User exists but password is Incorrect!');
+                return res.status(201).json('Incorrect Password!');
             })
             .catch(err => {
                 console.log(err);
             })
         }
         else {
-            return res.status(401).json('You need to sign up first!');
+            return res.status(201).json('Sign up first!');
         }
     })
 }
@@ -32,7 +32,7 @@ exports.signup = (req, res) => {
     console.log(email, password);
     User.findOne({email: email}, (err, user) => {
         if(user) {
-            return res.status(200).json('User already exists!');
+            return res.status(409).json('User already exists!');
         }
         bcrypt.hash(password, 5)
         .then(hashedPassword => {
