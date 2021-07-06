@@ -1,8 +1,8 @@
 const { Schema, model } = require('mongoose');
 
 const roomSchema = new Schema({
-    imageUrl: {
-        type: String,
+    imageUrls: {
+        type: Array,
         required: true
     },
     address: {

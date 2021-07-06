@@ -42,3 +42,12 @@ exports.signup = (req, res) => {
         return res.status(200).json(`User is signedup!`);
     });
 }
+
+exports.tokenVerification = (req, res) => {
+    const token = req.headers["authorization"].split(' ')[1];
+    if(authorize.verifyToken(token)) {
+        res.status(200).json(true);
+    } else {
+        res.status(200).json(false);
+    }
+}

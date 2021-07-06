@@ -1,13 +1,14 @@
 const jwt = require('jsonwebtoken');
 
-exports.verifyToken = (token) => {
+exports.verifyToken = function(token) {
     try {
-        const res = jwt.verify(token, 'thisisasecretkey');
+        const decoded = jwt.verify(token, 'thisisasecretkey');
         return true;
-    }
+    } 
     catch(err) {
-        return false;
+        return false
     }
+
 }
 
 exports.createToken = (email) => {
