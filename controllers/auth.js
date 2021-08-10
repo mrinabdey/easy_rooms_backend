@@ -12,7 +12,6 @@ exports.login = (req, res) => {
             .then(result => {
                 if(result) {
                     return res.status(200).json({token: authorize.createToken(user.email), email: user.email, name: user.name});
-                    // return res.status(200).json("User Valid!");
                 }
                 return res.status(201).json('Incorrect Password!');
             })
