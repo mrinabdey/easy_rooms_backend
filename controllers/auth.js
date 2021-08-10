@@ -5,13 +5,13 @@ const authorize = require('../middlewares/authorize');
 exports.login = (req, res) => {
     const email = req.body.email;
     const password = req.body.password;
-    console.log(email, password);
+    // console.log(email, password);
     User.findOne({email: email}, (err, user) => {
         if(user) {
             bcrypt.compare(password, user.password)
             .then(result => {
                 if(result) {
-                    return res.status(200).json(authorize.createToken(user.email));
+                    return res.status(200).json({token: authorize.createToken(user.email), email: user.email, name: user.name});
                     // return res.status(200).json("User Valid!");
                 }
                 return res.status(201).json('Incorrect Password!');
@@ -27,8 +27,11 @@ exports.login = (req, res) => {
 }
 
 exports.signup = (req, res) => {
+    const name = req.body.name;
     const email = req.body.email;
     const password = req.body.password;
+    const contact = req.body.contact;
+    const address = req.body.address;
     console.log(email, password);
     User.findOne({email: email}, (err, user) => {
         if(user) {
@@ -36,7 +39,7 @@ exports.signup = (req, res) => {
         }
         bcrypt.hash(password, 5)
         .then(hashedPassword => {
-            const user = new User({email: email, password: hashedPassword});
+            const user = new User({name: name, email: email, password: hashedPassword, contact: contact, address:address});
             user.save();
         });
         return res.status(200).json(`User is signedup!`);
@@ -50,4 +53,13 @@ exports.tokenVerification = (req, res) => {
     } else {
         res.status(200).json(false);
     }
+}
+
+exports.getUser = (req,res) => {
+    const email = req.params.email;
+    User.findOne({email: email}, (err,user) => {
+        if(user) {
+            return res.json(user);
+        }
+    });
 }

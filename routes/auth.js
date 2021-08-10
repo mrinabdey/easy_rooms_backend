@@ -7,4 +7,6 @@ router.post('/login', authControllers.login);
 
 router.get('/verify_token', authControllers.tokenVerification);
 
+router.get('/user/:email', authControllers.getUser);
+
 module.exports = router;
