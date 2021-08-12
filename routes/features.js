@@ -10,4 +10,6 @@ router.post('/add_bookmark', featuresControllers.addBookmark);
 
 router.post('/remove_bookmark', featuresControllers.removeBookmark);
 
+router.post('/get_bookmarks', featuresControllers.getBookmarks);
+
 module.exports = router;
