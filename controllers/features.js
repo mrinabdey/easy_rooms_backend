@@ -1,4 +1,5 @@
 const Room = require('../models/room');
+const User = require('../models/user');
 
 exports.addRoom = (req, res) => {
     const imageFiles = req.files;
@@ -29,4 +30,40 @@ exports.getRooms = (req, res) => {
     .catch(err => {
         console.log(err);
     });
+}
+
+exports.addBookmark = async (req,res) => {
+    const roomId = req.body.roomId;
+    const email = req.body.email;
+    console.log(roomId,email);
+    let newBookmarks;
+    await User.findOne({email: email}, (err,user) => {
+        newBookmarks = user.bookmarks;
+        if(!newBookmarks)
+        newBookmarks = [];
+        newBookmarks.push(roomId);
+    });
+    await User.updateOne({email: email}, {bookmarks: newBookmarks});
+    return res.status(201).json('Bookmark added successfully');
+}
+
+exports.removeBookmark = async (req,res) => {
+    const roomId = req.body.roomId;
+    const email = req.body.email;
+    console.log(roomId,email);
+    let newBookmarks;
+    let updatedBookmarks;
+    await User.findOne({email: email}, (err,user) => {
+        newBookmarks = user.bookmarks;
+        if(!newBookmarks) {
+            updatedBookmarks = [];
+        }
+        else if(newBookmarks.length > 0) {
+            updatedBookmarks = newBookmarks.filter(id => id !== roomId);
+            if(!updatedBookmarks)
+                updatedBookmarks = [];
+        }
+    });
+    await User.updateOne({email: email}, {bookmarks: updatedBookmarks});
+    return res.status(201).json('Bookmark removed successfully');
 }

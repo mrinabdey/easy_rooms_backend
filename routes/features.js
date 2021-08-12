@@ -6,5 +6,8 @@ router.post('/add_room', upload.array('image', 4), featuresControllers.addRoom);
 
 router.get('/get_rooms/:page_number', featuresControllers.getRooms);
 // router.get('/get_rooms', featuresControllers.getRooms);
+router.post('/add_bookmark', featuresControllers.addBookmark);
+
+router.post('/remove_bookmark', featuresControllers.removeBookmark);
 
 module.exports = router;

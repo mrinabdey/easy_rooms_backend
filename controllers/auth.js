@@ -5,13 +5,12 @@ const authorize = require('../middlewares/authorize');
 exports.login = (req, res) => {
     const email = req.body.email;
     const password = req.body.password;
-    // console.log(email, password);
     User.findOne({email: email}, (err, user) => {
         if(user) {
             bcrypt.compare(password, user.password)
             .then(result => {
                 if(result) {
-                    return res.status(200).json({token: authorize.createToken(user.email), email: user.email, name: user.name});
+                    return res.status(200).json({token: authorize.createToken(user.email), email: user.email, name: user.name, bookmarks: user.bookmarks});
                 }
                 return res.status(201).json('Incorrect Password!');
             })
@@ -38,7 +37,7 @@ exports.signup = (req, res) => {
         }
         bcrypt.hash(password, 5)
         .then(hashedPassword => {
-            const user = new User({name: name, email: email, password: hashedPassword, contact: contact, address:address});
+            const user = new User({name: name, email: email, password: hashedPassword, contact: contact, address:address, bookmarks: []});
             user.save();
         });
         return res.status(200).json(`User is signedup!`);
