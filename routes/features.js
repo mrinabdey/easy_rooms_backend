@@ -12,4 +12,8 @@ router.post('/remove_bookmark', featuresControllers.removeBookmark);
 
 router.post('/get_bookmarks', featuresControllers.getBookmarks);
 
+router.get('/get_count', featuresControllers.getCount);
+
+router.get('/get_bookmark_count/:email', featuresControllers.getCount);
+
 module.exports = router;

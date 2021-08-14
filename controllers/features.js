@@ -21,9 +21,10 @@ exports.addRoom = (req, res) => {
 
 exports.getRooms = (req, res) => {
     const pageNumber = parseInt(req.params.page_number);
+    console.log(pageNumber);
     Room.find()
-    // .skip(4 * pageNumber)  // provide four documents at a time
-    // .limit(4)
+    .skip(4 * pageNumber)  // provide four documents at a time
+    .limit(4)
     .then(rooms => {
         res.json(rooms);
     })
@@ -35,13 +36,11 @@ exports.getRooms = (req, res) => {
 exports.addBookmark = async (req,res) => {
     const roomId = req.body.roomId;
     const email = req.body.email;
-    console.log("add",roomId,email);
     let newBookmarks;
     await User.findOne({email: email}, async (err,user) => {
         if(err)
             return;
         newBookmarks = user.bookmarks;
-        console.log(newBookmarks);
         if(!newBookmarks)
         newBookmarks = [];
         newBookmarks.push(roomId);
@@ -53,14 +52,12 @@ exports.addBookmark = async (req,res) => {
 exports.removeBookmark = async (req,res) => {
     const roomId = req.body.roomId;
     const email = req.body.email;
-    console.log("remove",roomId,email);
     let newBookmarks;
     let updatedBookmarks;
     await User.findOne({email: email}, async (err,user) => {
         if(err)
             return;
         newBookmarks = user.bookmarks;
-        console.log(newBookmarks);
         if(!newBookmarks) {
             updatedBookmarks = [];
         }
@@ -77,10 +74,10 @@ exports.removeBookmark = async (req,res) => {
 exports.getBookmarks = (req,res) => {
     let bookmarkedRooms = [];
     const roomIds = req.body.roomIds;
+    const pageNumber = req.body.pageNumber;
     let bookmarkedRoomIds = roomIds.split(',');
     let len = bookmarkedRoomIds.length;
     bookmarkedRoomIds.map((roomId, index) => {
-        console.log(roomId);
         Room.findById(roomId, (err,room) => {
             if(err)
                 return;
@@ -89,5 +86,18 @@ exports.getBookmarks = (req,res) => {
                 return res.status(201).json(bookmarkedRooms);
             }
         });
+    });
+}
+
+exports.getCount = (req,res) => {
+    Room.countDocuments({}, (err,count) => {
+        return res.json(count);
+    });
+}
+
+exports.getBookmarkCount = (req,res) => {
+    const email = req.params.email;
+    Room.countDocuments({}, (err,count) => {
+        return res.json(count);
     });
 }

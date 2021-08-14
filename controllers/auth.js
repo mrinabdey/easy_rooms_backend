@@ -53,11 +53,3 @@ exports.tokenVerification = (req, res) => {
     }
 }
 
-exports.getUser = (req,res) => {
-    const email = req.params.email;
-    User.findOne({email: email}, (err,user) => {
-        if(user) {
-            return res.json(user);
-        }
-    });
-}
