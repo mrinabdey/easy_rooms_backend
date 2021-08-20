@@ -74,7 +74,6 @@ exports.removeBookmark = async (req,res) => {
 exports.getBookmarks = (req,res) => {
     let bookmarkedRooms = [];
     const roomIds = req.body.roomIds;
-    const pageNumber = req.body.pageNumber;
     let bookmarkedRoomIds = roomIds.split(',');
     let len = bookmarkedRoomIds.length;
     bookmarkedRoomIds.map((roomId, index) => {
