@@ -18,6 +18,9 @@ app.use('/images', express.static(path.join(__dirname, 'images')));
 app.use('/auth', authRoutes);
 app.use('/features', featuresRoutes);
 app.use('/user', userRoutes);
+app.use('/', (req, res) => {
+    res.send('<h1>Hello World</h1>');
+})
 
 mongoose.connect(process.env.MONGO_URI, {useNewUrlParser: true, useUnifiedTopology: true});
 const db = mongoose.connection;
