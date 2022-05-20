@@ -15,9 +15,18 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use("/images", express.static(path.join(__dirname, "images")));
 
+<<<<<<< HEAD
 app.use("/auth", authRoutes);
 app.use("/features", featuresRoutes);
 app.use("/user", userRoutes);
+=======
+app.use('/auth', authRoutes);
+app.use('/features', featuresRoutes);
+app.use('/user', userRoutes);
+app.use('/', (req, res) => {
+    res.send('<h1>Hello World</h1>');
+})
+>>>>>>> f495140b2fd08c437d1f10f2993b3a5d885062a8
 
 mongoose.connect(
   "mongodb+srv://easyrooms:Fiber-0009@cluster0.p4nvm.mongodb.net/?retryWrites=true&w=majority",
