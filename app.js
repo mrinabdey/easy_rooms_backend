@@ -27,7 +27,7 @@ app.use("/", (req, res) => {
 });
 
 mongoose.connect(
-  "mongodb+srv://pankaj:QfhNeuwBuySCUzbb@cluster0.p4nvm.mongodb.net/?retryWrites=true&w=majority",
+  "mongodb+srv://andrew:tyrex123@cluster0.cusk3.mongodb.net/?retryWrites=true&w=majority",
   { useNewUrlParser: true, useUnifiedTopology: true }
 );
 const db = mongoose.connection;
