@@ -22,9 +22,6 @@ app.use("/user", userRoutes);
 app.use("/auth", authRoutes);
 app.use("/features", featuresRoutes);
 app.use("/user", userRoutes);
-app.use("/", (req, res) => {
-  res.send("<h1>Hello World</h1>");
-});
 
 mongoose.connect(
   "mongodb+srv://andrew:tyrex123@cluster0.cusk3.mongodb.net/?retryWrites=true&w=majority",
